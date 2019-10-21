@@ -23,7 +23,6 @@ using (var client = new SlackClient(new Uri(baseUrl)))
 {
 	var result = await client
 		.SendMessageAsync(message);
-
 }
 ```
 
@@ -55,7 +54,6 @@ using (var client = new SlackClient(new Uri(baseUrl)))
 {
 	var result = await client
 		.SendMessageAsync(message);
-
 }
 ```
 
