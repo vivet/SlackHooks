@@ -10,17 +10,18 @@ namespace Tests.SlackHooks
     [TestClass]
     public class IntegrationTests
     {
-        public virtual string WebhookUrl => "";
+        public virtual string BaseUrl => "";
+        public virtual string Channel => "";
 
         [TestMethod]
         public void MessageTest()
         {
             var message = new Message();
             message
-                .SetChannel("test-channel")
+                .SetChannel(this.Channel)
                 .SetText("test-text");
 
-            var client = new SlackClient(new Uri(this.WebhookUrl));
+            var client = new SlackClient(new Uri(this.BaseUrl));
 
             var result = client
                 .SendMessageAsync(message).Result;
@@ -33,7 +34,7 @@ namespace Tests.SlackHooks
         {
             var message = new Message();
             message
-                .SetChannel("test-channel")
+                .SetChannel(this.Channel)
                 .AddAttachment(x => x
                     .SetTitle(y => y
                         .SetText("test-title")
@@ -51,7 +52,7 @@ namespace Tests.SlackHooks
                         .SetText("text-footer")
                         .SetIconUrl("https://platform.slack-edge.com/img/default_application_icon.png")));
 
-            var client = new SlackClient(new Uri(this.WebhookUrl));
+            var client = new SlackClient(new Uri(this.BaseUrl));
 
             var result = client
                 .SendMessageAsync(message).Result;
