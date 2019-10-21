@@ -17,7 +17,7 @@ namespace Tests.SlackHooks
         {
             var message = new Message();
             message
-                .SetChannel("BPDTC9K55/ZsJ2JuFWM6sEb6ronODNXg5n")
+                .SetChannel("test-channel")
                 .SetText("test-text");
 
             var client = new SlackClient(new Uri(this.WebhookUrl));
@@ -33,7 +33,7 @@ namespace Tests.SlackHooks
         {
             var message = new Message();
             message
-                .SetChannel("BPDTC9K55/ZsJ2JuFWM6sEb6ronODNXg5n")
+                .SetChannel("test-channel")
                 .AddAttachment(x => x
                     .SetTitle(y => y
                         .SetText("test-title")
