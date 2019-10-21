@@ -29,35 +29,41 @@ namespace SlackHooks.Extensions.Fluent
 
             return attachment;
         }
-
+        
         /// <summary>
         /// Set Title.
         /// </summary>
         /// <param name="attachment">The <see cref="Attachment"/>.</param>
-        /// <param name="title">The <see cref="Title"/>.</param>
+        /// <param name="selctor">The <see cref="Title"/> selector.</param>
         /// <returns>The <see cref="Attachment"/>.</returns>
-        public static Attachment SetTitle(this Attachment attachment, Title title)
+        public static Attachment SetTitle(this Attachment attachment, Func<Title, Title> selctor)
         {
             if (attachment == null) 
                 throw new ArgumentNullException(nameof(attachment));
            
-            attachment.Title = title ?? throw new ArgumentNullException(nameof(title));
+            var title = new Title();
+
+            attachment.Title = selctor
+                .Invoke(title);
 
             return attachment;
         }
-
+        
         /// <summary>
         /// Set Author.
         /// </summary>
         /// <param name="attachment">The <see cref="Attachment"/>.</param>
-        /// <param name="author">The <see cref="Author"/>.</param>
+        /// <param name="selctor">The <see cref="Author"/> selector.</param>
         /// <returns>The <see cref="Attachment"/>.</returns>
-        public static Attachment SetAuthor(this Attachment attachment, Author author)
+        public static Attachment SetAuthor(this Attachment attachment, Func<Author, Author> selctor)
         {
             if (attachment == null) 
                 throw new ArgumentNullException(nameof(attachment));
+           
+            var footer = new Author();
 
-            attachment.Author = author ?? throw new ArgumentNullException(nameof(author));
+            attachment.Author = selctor
+                .Invoke(footer);
 
             return attachment;
         }
@@ -66,14 +72,17 @@ namespace SlackHooks.Extensions.Fluent
         /// Set Footer.
         /// </summary>
         /// <param name="attachment">The <see cref="Attachment"/>.</param>
-        /// <param name="footer">The <see cref="Footer"/>.</param>
+        /// <param name="selctor">The <see cref="Footer"/> selector.</param>
         /// <returns>The <see cref="Attachment"/>.</returns>
-        public static Attachment SetFooter(this Attachment attachment, Footer footer)
+        public static Attachment SetFooter(this Attachment attachment, Func<Footer, Footer> selctor)
         {
             if (attachment == null) 
                 throw new ArgumentNullException(nameof(attachment));
            
-            attachment.Footer = footer ?? throw new ArgumentNullException(nameof(footer));
+            var footer = new Footer();
+
+            attachment.Footer = selctor
+                .Invoke(footer);
 
             return attachment;
         }

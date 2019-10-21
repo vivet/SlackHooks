@@ -11,7 +11,7 @@
         /// Text.
         /// The footer text.
         /// </summary>
-        public virtual string Text { get; set; }
+        public virtual string Text { get; protected internal set; }
         
         /// <summary>
         /// Icon Url.
@@ -19,6 +19,6 @@
         /// You must also provide a footer for the field to be recognized.
         /// We'll render what you provide at 16px by 16px. It's best to use an image that is similarly sized.
         /// </summary>
-        public virtual string IconkUrl { get; set; }
+        public virtual string IconUrl { get; protected internal set; }
     }
 }

@@ -15,7 +15,7 @@ namespace SlackHooks
     /// </summary>
     public class SlackClient : IDisposable
     {
-        private readonly Uri webhookUrl;
+        private readonly Uri baseUri;
         private readonly HttpClient httpClient = new HttpClient();
 
         /// <summary>
@@ -31,10 +31,15 @@ namespace SlackHooks
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="webhookUrl">The webhook url, configured in the Slack App.</param>
-        public SlackClient(Uri webhookUrl)
+        /// <param name="baseUri">The base part of the webhook url, configured in the Slack App.</param>
+        public SlackClient(Uri baseUri)
         {
-            this.webhookUrl = webhookUrl ?? throw new ArgumentNullException(nameof(webhookUrl));
+            this.baseUri = baseUri ?? throw new ArgumentNullException(nameof(baseUri));
+
+            if (!this.baseUri.OriginalString.EndsWith("/"))
+            {
+                this.baseUri = new Uri($"{this.baseUri.OriginalString}/");
+            }
         }
 
         /// <summary>
@@ -47,12 +52,13 @@ namespace SlackHooks
             if (message == null)
                 throw new ArgumentNullException(nameof(message));
 
+            var uri = new Uri(this.baseUri, message.Channel);
             var json = JsonConvert.SerializeObject(message, SlackClient.jsonSerializerSettings);
 
             using (var content = new StringContent(json, Encoding.UTF8, "application/json"))
             {
                 var response = await this.httpClient
-                    .PostAsync(this.webhookUrl, content);
+                    .PostAsync(uri, content);
 
                 return response;
             }

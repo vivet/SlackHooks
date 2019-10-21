@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using SlackHooks;
 using SlackHooks.Extensions.Fluent;
 using SlackHooks.Models;
 
@@ -10,6 +11,17 @@ namespace Tests.SlackHooks
     [TestClass]
     public class UnitTests
     {
+        [TestMethod]
+        public void MessageChannelTest()
+        {
+            var message = new Message();
+            message
+                .SetChannel("test-channel");
+
+            Assert.IsNotNull(message);
+            Assert.AreEqual("test-channel", message.Channel);
+        }
+
         [TestMethod]
         public void MessageTextTest()
         {
@@ -20,7 +32,7 @@ namespace Tests.SlackHooks
             Assert.IsNotNull(message);
             Assert.AreEqual("test-text", message.Text);
 
-            var json = JsonConvert.SerializeObject(message, global::SlackHooks.SlackClient.jsonSerializerSettings);
+            var json = JsonConvert.SerializeObject(message, SlackClient.jsonSerializerSettings);
 
             Assert.IsNotNull(json);
             Assert.AreEqual("{\"text\":\"test-text\",\"mrkdwn\":true,\"attachments\":[]}", json);
@@ -36,7 +48,7 @@ namespace Tests.SlackHooks
             Assert.IsNotNull(message);
             Assert.AreEqual("test-text", message.Text);
 
-            var json = JsonConvert.SerializeObject(message, global::SlackHooks.SlackClient.jsonSerializerSettings);
+            var json = JsonConvert.SerializeObject(message, SlackClient.jsonSerializerSettings);
 
             Assert.IsNotNull(json);
             Assert.AreEqual("{\"text\":\"test-text\",\"mrkdwn\":false,\"attachments\":[]}", json);
@@ -54,7 +66,7 @@ namespace Tests.SlackHooks
             Assert.AreEqual("test-text", message.Text);
             Assert.AreEqual("test-user", message.Username);
 
-            var json = JsonConvert.SerializeObject(message, global::SlackHooks.SlackClient.jsonSerializerSettings);
+            var json = JsonConvert.SerializeObject(message, SlackClient.jsonSerializerSettings);
 
             Assert.IsNotNull(json);
             Assert.AreEqual("{\"text\":\"test-text\",\"username\":\"test-user\",\"mrkdwn\":true,\"attachments\":[]}", json);
@@ -73,10 +85,10 @@ namespace Tests.SlackHooks
             Assert.IsNotNull(attachment);
             Assert.AreEqual("test-attachment-text", attachment.Text);
 
-            var json = JsonConvert.SerializeObject(message, global::SlackHooks.SlackClient.jsonSerializerSettings);
+            var json = JsonConvert.SerializeObject(message, SlackClient.jsonSerializerSettings);
 
             Assert.IsNotNull(json);
-            Assert.AreEqual("{\"mrkdwn\":true,\"attachments\":[{\"text\":\"test-attachment-text\",\"color\":\"#FFFFFF\",\"ts\":0,\"mrkdwn_in\":[\"text\"],\"fields\":[]}]}", json);
+            Assert.AreEqual("{\"mrkdwn\":true,\"attachments\":[{\"text\":\"test-attachment-text\",\"color\":\"#FFFFFF\",\"mrkdwn_in\":[\"text\"],\"fields\":[]}]}", json);
         }
         
         [TestMethod]
@@ -94,10 +106,10 @@ namespace Tests.SlackHooks
             Assert.AreEqual("test-attachment-text", attachment.Text);
             Assert.AreEqual("test-attachment-pretext", attachment.PreText);
 
-            var json = JsonConvert.SerializeObject(message, global::SlackHooks.SlackClient.jsonSerializerSettings);
+            var json = JsonConvert.SerializeObject(message, SlackClient.jsonSerializerSettings);
 
             Assert.IsNotNull(json);
-            Assert.AreEqual("{\"mrkdwn\":true,\"attachments\":[{\"text\":\"test-attachment-text\",\"pretext\":\"test-attachment-pretext\",\"color\":\"#FFFFFF\",\"ts\":0,\"mrkdwn_in\":[\"text\"],\"fields\":[]}]}", json);
+            Assert.AreEqual("{\"mrkdwn\":true,\"attachments\":[{\"text\":\"test-attachment-text\",\"pretext\":\"test-attachment-pretext\",\"color\":\"#FFFFFF\",\"mrkdwn_in\":[\"text\"],\"fields\":[]}]}", json);
         }
 
         [TestMethod]
@@ -115,10 +127,10 @@ namespace Tests.SlackHooks
             Assert.AreEqual("test-attachment-text", attachment.Text);
             Assert.AreEqual("test-attachment-fallback", attachment.FallbackText);
 
-            var json = JsonConvert.SerializeObject(message, global::SlackHooks.SlackClient.jsonSerializerSettings);
+            var json = JsonConvert.SerializeObject(message, SlackClient.jsonSerializerSettings);
 
             Assert.IsNotNull(json);
-            Assert.AreEqual("{\"mrkdwn\":true,\"attachments\":[{\"text\":\"test-attachment-text\",\"fallback\":\"test-attachment-fallback\",\"color\":\"#FFFFFF\",\"ts\":0,\"mrkdwn_in\":[\"text\"],\"fields\":[]}]}", json);
+            Assert.AreEqual("{\"mrkdwn\":true,\"attachments\":[{\"text\":\"test-attachment-text\",\"fallback\":\"test-attachment-fallback\",\"color\":\"#FFFFFF\",\"mrkdwn_in\":[\"text\"],\"fields\":[]}]}", json);
         }
 
         [TestMethod]
@@ -136,10 +148,10 @@ namespace Tests.SlackHooks
             Assert.AreEqual("test-attachment-text", attachment.Text);
             Assert.AreEqual("test-attachment-image-url", attachment.ImageUrl);
 
-            var json = JsonConvert.SerializeObject(message, global::SlackHooks.SlackClient.jsonSerializerSettings);
+            var json = JsonConvert.SerializeObject(message, SlackClient.jsonSerializerSettings);
 
             Assert.IsNotNull(json);
-            Assert.AreEqual("{\"mrkdwn\":true,\"attachments\":[{\"text\":\"test-attachment-text\",\"image_url\":\"test-attachment-image-url\",\"color\":\"#FFFFFF\",\"ts\":0,\"mrkdwn_in\":[\"text\"],\"fields\":[]}]}", json);
+            Assert.AreEqual("{\"mrkdwn\":true,\"attachments\":[{\"text\":\"test-attachment-text\",\"image_url\":\"test-attachment-image-url\",\"color\":\"#FFFFFF\",\"mrkdwn_in\":[\"text\"],\"fields\":[]}]}", json);
         }
 
         [TestMethod]
@@ -157,10 +169,10 @@ namespace Tests.SlackHooks
             Assert.AreEqual("test-attachment-text", attachment.Text);
             Assert.AreEqual("test-attachment-thumb-url", attachment.ThumbUrl);
 
-            var json = JsonConvert.SerializeObject(message, global::SlackHooks.SlackClient.jsonSerializerSettings);
+            var json = JsonConvert.SerializeObject(message, SlackClient.jsonSerializerSettings);
 
             Assert.IsNotNull(json);
-            Assert.AreEqual("{\"mrkdwn\":true,\"attachments\":[{\"text\":\"test-attachment-text\",\"thumb_url\":\"test-attachment-thumb-url\",\"color\":\"#FFFFFF\",\"ts\":0,\"mrkdwn_in\":[\"text\"],\"fields\":[]}]}", json);
+            Assert.AreEqual("{\"mrkdwn\":true,\"attachments\":[{\"text\":\"test-attachment-text\",\"thumb_url\":\"test-attachment-thumb-url\",\"color\":\"#FFFFFF\",\"mrkdwn_in\":[\"text\"],\"fields\":[]}]}", json);
         }
 
         [TestMethod]
@@ -179,10 +191,10 @@ namespace Tests.SlackHooks
             Assert.AreEqual(Color.AliceBlue, attachment.Color);
             Assert.AreEqual("#F0F8FF", attachment.HexColor);
 
-            var json = JsonConvert.SerializeObject(message, global::SlackHooks.SlackClient.jsonSerializerSettings);
+            var json = JsonConvert.SerializeObject(message, SlackClient.jsonSerializerSettings);
 
             Assert.IsNotNull(json);
-            Assert.AreEqual("{\"mrkdwn\":true,\"attachments\":[{\"text\":\"test-attachment-text\",\"color\":\"#F0F8FF\",\"ts\":0,\"mrkdwn_in\":[\"text\"],\"fields\":[]}]}", json);
+            Assert.AreEqual("{\"mrkdwn\":true,\"attachments\":[{\"text\":\"test-attachment-text\",\"color\":\"#F0F8FF\",\"mrkdwn_in\":[\"text\"],\"fields\":[]}]}", json);
         }
 
         [TestMethod]

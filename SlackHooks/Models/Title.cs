@@ -10,12 +10,12 @@
         /// Text.
         /// The title text.
         /// </summary>
-        public virtual string Text { get; set; }
+        public virtual string Text { get; protected internal set; }
         
         /// <summary>
         /// Link Url.
         /// The valid URL title text will be hyperlinked.
         /// </summary>
-        public virtual string LinkUrl { get; set; }
+        public virtual string LinkUrl { get; protected internal set; }
     }
 }

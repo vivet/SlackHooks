@@ -96,7 +96,7 @@ namespace SlackHooks.Models
         /// the attachment will display an additional timestamp value as part of the attachment's footer.
         /// </summary>
         [JsonProperty("ts")]
-        public virtual int TimeStamp { get; set; }
+        public virtual int? TimeStamp { get; set; }
 
         /// <summary>
         /// Markdown.

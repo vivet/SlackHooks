@@ -9,6 +9,22 @@ namespace SlackHooks.Extensions.Fluent
     public static class MessageExtensions
     {
         /// <summary>
+        /// Set Channel.
+        /// </summary>
+        /// <param name="message">The <see cref="Message"/>.</param>
+        /// <param name="channel">The channel path of the webhook url.</param>
+        /// <returns>The <see cref="Message"/>.</returns>
+        public static Message SetChannel(this Message message, string channel)
+        {
+            if (message == null) 
+                throw new ArgumentNullException(nameof(message));
+
+            message.Channel = channel ?? throw new ArgumentNullException(nameof(channel));
+
+            return message;
+        }
+
+        /// <summary>
         /// Set Text.
         /// </summary>
         /// <param name="message">The <see cref="Message"/>.</param>
