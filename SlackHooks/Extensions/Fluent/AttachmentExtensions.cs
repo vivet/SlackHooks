@@ -22,7 +22,7 @@ namespace SlackHooks.Extensions.Fluent
             if (attachment == null) 
                 throw new ArgumentNullException(nameof(attachment));
 
-            attachment.Text = text ?? throw new ArgumentNullException(nameof(text));
+            attachment.Text = text;
 
             if (useMarkdown)
                 attachment.MarkDown |= MarkDownType.Text;
@@ -99,7 +99,7 @@ namespace SlackHooks.Extensions.Fluent
             if (attachment == null) 
                 throw new ArgumentNullException(nameof(attachment));
 
-            attachment.PreText = text ?? throw new ArgumentNullException(nameof(text));
+            attachment.PreText = text;
 
             if (useMarkdown)
                 attachment.MarkDown |= MarkDownType.Pretext;
@@ -118,7 +118,7 @@ namespace SlackHooks.Extensions.Fluent
             if (attachment == null) 
                 throw new ArgumentNullException(nameof(attachment));
 
-            attachment.FallbackText = text ?? throw new ArgumentNullException(nameof(text));
+            attachment.FallbackText = text;
 
             return attachment;
         }
@@ -134,7 +134,7 @@ namespace SlackHooks.Extensions.Fluent
             if (attachment == null) 
                 throw new ArgumentNullException(nameof(attachment));
 
-            attachment.ImageUrl = url ?? throw new ArgumentNullException(nameof(url));
+            attachment.ImageUrl = url;
 
             return attachment;
         }
@@ -150,7 +150,7 @@ namespace SlackHooks.Extensions.Fluent
             if (attachment == null) 
                 throw new ArgumentNullException(nameof(attachment));
 
-            attachment.ThumbUrl = url ?? throw new ArgumentNullException(nameof(url));
+            attachment.ThumbUrl = url;
 
             return attachment;
         }
@@ -238,6 +238,9 @@ namespace SlackHooks.Extensions.Fluent
         {
             if (attachment == null) 
                 throw new ArgumentNullException(nameof(attachment));
+
+            if (field == null) 
+                throw new ArgumentNullException(nameof(field));
 
             attachment.Fields
                 .Add(field);

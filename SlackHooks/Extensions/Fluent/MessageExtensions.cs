@@ -36,7 +36,7 @@ namespace SlackHooks.Extensions.Fluent
             if (message == null) 
                 throw new ArgumentNullException(nameof(message));
 
-            message.Text = text ?? throw new ArgumentNullException(nameof(text));
+            message.Text = text;
             message.UseMarkdown = useMarkdown;
 
             return message;
@@ -53,7 +53,7 @@ namespace SlackHooks.Extensions.Fluent
             if (message == null) 
                 throw new ArgumentNullException(nameof(message));
 
-            message.Username = username ?? throw new ArgumentNullException(nameof(username));
+            message.Username = username;
  
             return message;
         }

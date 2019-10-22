@@ -19,7 +19,7 @@ namespace SlackHooks.Extensions.Fluent
             if (author == null) 
                 throw new ArgumentNullException(nameof(author));
 
-            author.Name = name ?? throw new ArgumentNullException(nameof(name));
+            author.Name = name;
 
             return author;
         }
@@ -35,7 +35,7 @@ namespace SlackHooks.Extensions.Fluent
             if (author == null) 
                 throw new ArgumentNullException(nameof(author));
 
-            author.LinkUrl = url ?? throw new ArgumentNullException(nameof(url));
+            author.LinkUrl = url;
 
             return author;
         }
@@ -51,7 +51,7 @@ namespace SlackHooks.Extensions.Fluent
             if (author == null) 
                 throw new ArgumentNullException(nameof(author));
 
-            author.IconUrl = url ?? throw new ArgumentNullException(nameof(url));
+            author.IconUrl = url;
 
             return author;
         }

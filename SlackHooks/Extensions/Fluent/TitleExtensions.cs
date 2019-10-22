@@ -19,7 +19,7 @@ namespace SlackHooks.Extensions.Fluent
             if (title == null) 
                 throw new ArgumentNullException(nameof(title));
 
-            title.Text = text ?? throw new ArgumentNullException(nameof(text));
+            title.Text = text;
 
             return title;
         }
@@ -35,7 +35,7 @@ namespace SlackHooks.Extensions.Fluent
             if (title == null) 
                 throw new ArgumentNullException(nameof(title));
 
-            title.LinkUrl = url ?? throw new ArgumentNullException(nameof(url));
+            title.LinkUrl = url;
 
             return title;
         }

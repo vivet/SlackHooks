@@ -19,7 +19,7 @@ namespace SlackHooks.Extensions.Fluent
             if (footer == null) 
                 throw new ArgumentNullException(nameof(footer));
 
-            footer.Text = text ?? throw new ArgumentNullException(nameof(text));
+            footer.Text = text;
 
             return footer;
         }
@@ -35,7 +35,7 @@ namespace SlackHooks.Extensions.Fluent
             if (footer == null) 
                 throw new ArgumentNullException(nameof(footer));
 
-            footer.IconUrl = url ?? throw new ArgumentNullException(nameof(url));
+            footer.IconUrl = url;
 
             return footer;
         }
