@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SlackHooks.Models;
@@ -16,7 +19,39 @@ namespace SlackHooks
     public class SlackClient : IDisposable
     {
         private readonly Uri baseUri;
-        private readonly HttpClient httpClient = new HttpClient();
+        private static HttpClient httpClient;
+        private static readonly TimeSpan httpTimeout = new TimeSpan(0, 0, 30);
+
+        /// <summary>
+        /// Http Client.
+        /// </summary>
+        protected internal static HttpClient HttpClient
+        {
+            get
+            {
+                if (SlackClient.httpClient == null)
+                {
+                    var httpClientHandler = new HttpClientHandler
+                    {
+                        AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+                    };
+
+                    SlackClient.httpClient = new HttpClient(httpClientHandler)
+                    {
+                        Timeout = SlackClient.httpTimeout
+                    };
+
+                    SlackClient.httpClient.DefaultRequestHeaders.Accept
+                        .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                }
+
+                return SlackClient.httpClient;
+            }
+            set
+            {
+                SlackClient.httpClient = value;
+            }
+        }
 
         /// <summary>
         /// Json Serializer Settings.
@@ -43,11 +78,12 @@ namespace SlackHooks
         }
 
         /// <summary>
-        /// Send Message Async.
+        /// Send Async.
         /// </summary>
         /// <param name="message">The <see cref="Message"/>.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/>.</param>
         /// <returns>The response.</returns>
-        public async Task<HttpResponseMessage> SendMessageAsync(Message message)
+        public async Task<HttpResponseMessage> SendAsync(Message message, CancellationToken cancellationToken = default)
         {
             if (message == null)
                 throw new ArgumentNullException(nameof(message));
@@ -57,17 +93,33 @@ namespace SlackHooks
 
             using (var content = new StringContent(json, Encoding.UTF8, "application/json"))
             {
-                var response = await this.httpClient
-                    .PostAsync(uri, content);
+                var response = await SlackClient.HttpClient
+                    .PostAsync(uri, content, cancellationToken);
 
                 return response;
             }
         }
 
-        /// <inheritdoc />
-        public void Dispose()
+        /// <summary>
+        /// Disposes.
+        /// </summary>
+        public virtual void Dispose()
         {
-            httpClient?.Dispose();
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Disposes of the <see cref="HttpClient"/>, if <paramref name="disposing"/> is true.
+        /// </summary>
+        /// <param name="disposing">Whether to dispose resources or not.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing)
+                return;
+
+            SlackClient.HttpClient?.Dispose();
+            SlackClient.httpClient = null;
         }
     }
 }

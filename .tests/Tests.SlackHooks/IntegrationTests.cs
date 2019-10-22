@@ -24,7 +24,7 @@ namespace Tests.SlackHooks
             var client = new SlackClient(new Uri(this.BaseUrl));
 
             var result = client
-                .SendMessageAsync(message).Result;
+                .SendAsync(message).Result;
 
             Assert.IsTrue(result.IsSuccessStatusCode);
         }
@@ -55,7 +55,7 @@ namespace Tests.SlackHooks
             var client = new SlackClient(new Uri(this.BaseUrl));
 
             var result = client
-                .SendMessageAsync(message).Result;
+                .SendAsync(message).Result;
 
             Assert.IsTrue(result.IsSuccessStatusCode);
         }
